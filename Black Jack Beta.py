@@ -42,7 +42,7 @@ while poursuivre == 1:      #Boucle pour rejouer
         elif points_bank == points_player:
             print("Égalité")
         elif points_player > points_bank:
-            print("Vous gagnez " + str(mise))
+            print("Vous gagnez " + str(mise) + " points")
             argent += mise
         else:
             print("La banque gagne")
