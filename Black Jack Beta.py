@@ -16,22 +16,22 @@ while poursuivre == 1:      #Boucle pour rejouer
     mise = int(input("Veuillez entrer votre mise (vous avez : " + str(argent) + ") : "))
     while replay == 1:      #Boucle pour piocher les cartes
         card = randint(1, 13)
-        nb_card_player += 1
+        nb_card_player += 1 #Permet de compter les cartes du joueurs
         print("La carte tirée est : " + str(card_type[card-1]))
         if card == 1:       #La carte as vaut 1 ou 11 points
-            card_as += 1
+            card_as += 1    #Permet de compter les cartes "as", les points des cartes "as" sont ajoutés après
         else:
-            points_player += card_value[card-1]
+            points_player += card_value[card-1] #Permet de compter les points du joueur
         if points_player + card_as > 21:        #Le plus petite valeur d'une carte as est 1
             print("Vous avez sauté")
-            argent -= mise
+            argent -= mise  #Mise perdue
             replay = 0
         else:
-            replay = int(input("Souhaitez-vous une carte ? (1: oui, 2: non) "))
+            replay = int(input("Souhaitez-vous une carte ? (1: oui, 2: non) ")) #Demande si on veut piocher une autre carte
     if card_as >= 1:        #Calcul de la valeur de la ou des carte(s) as
         if points_player + 11 + card_as - 1 <= 21:  #Au maximum 1 carte as qui vaut 11
             points_player += 11 + card_as - 1
-        else:
+        else:   #Toutes
             points_player += card_as
     if points_player <= 21:
         card_as = 0         #Reset
@@ -56,9 +56,18 @@ while poursuivre == 1:      #Boucle pour rejouer
             argent += mise
         elif points_bank == points_player:
             print("La banque a obtenu " + str(points_bank) + " points")
-            #if points_bank == 21:
-            #TODO
-            
+            if points_bank == 21:
+                if nb_card_bank == nb_card_player:
+                    print("Égalité")
+                elif nb_card_bank > 2:
+                    print("La banque a sauté")
+                    print("Vous gagnez " + str(mise))
+                    argent += mise
+                else:
+                    print("Vous gagnez " + str(mise))
+                    argent += mise
+            else:
+                print("Égalité")
         elif points_player > points_bank:
             print("La banque a obtenu " + str(points_bank) + " points")
             print("Vous gagnez " + str(mise))
