@@ -10,13 +10,13 @@ card_type = ["as", 2, 3, 4, 5, 6, 7, 8, 9, 10, "valet", "dame", "roi"]
 card_value = [11, 2, 3, 4, 5, 6, 7, 8 ,9, 10, 10, 10, 10]
 
 while poursuivre == 1:      #Boucle pour rejouer
-    points_player = 0       #Reset
-    points_bank = 0         #Reset
+    points_player, points_bank, nb_card_player, nb_card_bank= 0, 0, 0, 0       #Reset
     replay = 1              #Reset
     card_as = 0             #Reset
     mise = int(input("Veuillez entrer votre mise (vous avez : " + str(argent) + ") : "))
-    while replay == 1:      #Boucle pour piocher une autre carte
+    while replay == 1:      #Boucle pour piocher les cartes
         card = randint(1, 13)
+        nb_card_player += 1
         print("La carte tirée est : " + str(card_type[card-1]))
         if card == 1:       #La carte as vaut 1 ou 11 points
             card_as += 1
@@ -40,6 +40,7 @@ while poursuivre == 1:      #Boucle pour rejouer
         while points_bank < 17:     #La banque ne joue que si elle a strictement moins de 17 points
             card = randint(1, 13)
             print("La carte tirée est : " + str(card_type[card-1]))
+            nb_card_bank += 1
             if card == 1:
                 card_as += 1
             else:
@@ -55,7 +56,9 @@ while poursuivre == 1:      #Boucle pour rejouer
             argent += mise
         elif points_bank == points_player:
             print("La banque a obtenu " + str(points_bank) + " points")
-            print("Égalité")
+            #if points_bank == 21:
+            #TODO
+            
         elif points_player > points_bank:
             print("La banque a obtenu " + str(points_bank) + " points")
             print("Vous gagnez " + str(mise))
