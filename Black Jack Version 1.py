@@ -21,32 +21,24 @@ def as_value(points, nb_as):
     else:
         points_to_add = nb_as
     return points_to_add
-    
-#Initialisation
-print("Bienvenue au Blackjack")
-graine = int(input("Entrez la graine : "))
-seed(graine)
-money = int(input("Veuillez entrer la quantité d'argent en votre possession : "))
-poursuivre = 1
-card_type = [0, "as", 2, 3, 4, 5, 6, 7, 8, 9, 10, "valet", "dame", "roi"]   #Rajout d'une valeur (0) au début pour faire correspondre la carte à son indice
-card_value = [0, 1, 2, 3, 4, 5, 6, 7, 8 ,9, 10, 10, 10, 10]                 #Exemple : Carte 2 correspond à l'indice 2
 
-while poursuivre == 1:      #Boucle pour rejouer
+
+def game(cash,card_Type,card_Value):      #Fonction du jeu
     points_player, points_bank, nb_card_player, nb_card_bank= 0, 0, 0, 0       #Reset
     repiocher = 1              #Reset
     card_as = 0             #Reset
-    mise = int(input("Veuillez entrer votre mise (vous avez : " + str(money) + ") : "))
+    mise = int(input("Veuillez entrer votre mise (vous avez : " + str(cash) + ") : "))
     while repiocher == 1:      #Tour du joueur
         card = randint(1, 13)
         nb_card_player += 1
-        print("La carte tirée est : " + str(card_type[card]))
+        print("La carte tirée est : " + str(card_Type[card]))
         if card == 1:       #Permet de compter les cartes "as", les points des cartes "as" sont ajoutés après
             card_as += 1
         else:
-            points_player += card_value[card]
+            points_player += card_Value[card]
         if points_player + card_as > 21:        #Le plus petite valeur d'une carte as est 1
             print("Vous avez sauté")
-            money -= mise
+            cash -= mise
             repiocher = 0
         else:
             repiocher = int(input("Souhaitez-vous une carte ? (1: oui, 2: non) ")) #Demande si on veut piocher une autre carte
@@ -58,12 +50,12 @@ while poursuivre == 1:      #Boucle pour rejouer
         print("La banque joue :")   #La banque commence à jouer
         while points_bank + card_as < 17 and repiocher == 1:     #La banque ne joue que si elle a strictement moins de 17 points
             card = randint(1, 13)
-            print("La carte tirée est : " + str(card_type[card]))
+            print("La carte tirée est : " + str(card_Type[card]))
             nb_card_bank += 1
             if card == 1:
                 card_as += 1
             else:
-                points_bank += card_value[card]
+                points_bank += card_Value[card]
             potential_points = points_bank + as_value(points_bank, card_as)
             if card_as >= 1 and potential_points < 17 and potential_points >= 21:
                 repiocher = 0
@@ -72,16 +64,16 @@ while poursuivre == 1:      #Boucle pour rejouer
         if points_bank > 21:        #Vérifier si c'est le joueur ou la banque qui a le plus de points
             print("La banque a sauté")
             print("Vous gagnez " + str(mise))
-            money += mise
+            cash += mise
         elif points_bank == points_player:
             print("La banque a obtenu " + str(points_bank) + " points")
             if points_bank == 21:   #Verifie si un des deux ou les deux ont obtenu un BlackJack (Un as + un carte valant 10)
                 if nb_card_player == 2 and nb_card_bank > 2:
                     print("Vous gagnez " + str(mise))
-                    money += mise
+                    cash += mise
                 elif nb_card_bank == 2 and nb_card_player > 2:
                     print("La banque gagne")
-                    money -= mise
+                    cash -= mise
                 else:
                     print("Égalité")
             else:
@@ -89,10 +81,21 @@ while poursuivre == 1:      #Boucle pour rejouer
         elif points_player > points_bank:
             print("La banque a obtenu " + str(points_bank) + " points")
             print("Vous gagnez " + str(mise))
-            money += mise
+            cash += mise
         else:
             print("La banque a obtenu " + str(points_bank) + " points")
             print("La banque gagne")
-            money -= mise
-    print()
-    poursuivre = int(input("Souhaitez-vous jouer une autre partie ? (1: oui, 2: non) "))
+            cash -= mise
+    
+#Initialisation
+print("Bienvenue au Blackjack")
+graine = int(input("Entrez la graine : "))
+seed(graine)
+money = int(input("Veuillez entrer la quantite d'argent en votre possession : "))
+poursuivre = "oui"
+card_type = [0, "as", 2, 3, 4, 5, 6, 7, 8, 9, 10, "valet", "dame", "roi"]   #Rajout d'une valeur (0) au début pour faire correspondre la carte à son indice
+card_value = [0, 1, 2, 3, 4, 5, 6, 7, 8 ,9, 10, 10, 10, 10]                 #Exemple : Carte 2 correspond à l'indice 2
+
+while poursuivre == "oui":
+    game(money,card_type,card_value)
+    poursuivre = input("Souhaitez-vous jouer une autre partie ? (oui, non) ")
