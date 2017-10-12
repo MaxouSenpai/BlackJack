@@ -1,20 +1,20 @@
 from random import randint, seed
 
 """
-Ce programme est une version simplifiée pour un seul joueur du célèbre jeu de casino, le BlackJack
-Le joueur affronte la banque jouée par l'ordinateur
-Le but du jeu est d'avoir plus de points que la banque tout en ne dépassant pas 21 points
-La carte As vaut 1 ou 11 points(choisit automatiquement en favorisant celui qui l'a obtenu)
-Les cartes de 2 à 10 vallent la valeur faciale de la carte (le 2 vaut 2 points etc)
-Les cartes "Valet", "Dame" et "Roi" valent chacune 10 points
-Pour jouer il suffit de suivre les instructions affichées a l'écran
+Ce programme est une version simplifiée pour un seul joueur du célèbre jeu de casino, le BlackJack.
+Le joueur affronte la banque qui est jouée par l'ordinateur.
+Le but du jeu est d'avoir plus de points que la banque tout en ne dépassant pas 21 points.
+La carte As vaut 1 ou 11 points(choisit automatiquement en favorisant celui qui l'a obtenu).
+Les cartes de 2 à 10 vallent le numéro de la carte (le 2 vaut 2 points etc).
+Les cartes "Valet", "Dame" et "Roi" valent chacune 10 points.
+Pour jouer il suffit de suivre les instructions affichées a l'écran.
 """
 
 def as_value(points, nb_as):
     """
-    Cette fonction calcule la valeur de la ou des cartes "As"
-    Elle prend en entrée les points ainsi que le nombre de cartes "As" obtenus
-    Elle renvoie le nombre de points à ajouter
+    Cette fonction calcule la valeur de la ou des cartes "As".
+    Elle prend en entrée les points ainsi que le nombre de cartes "As" obtenus.
+    Elle renvoie le nombre de points à ajouter.
     """
     if points + 11 + nb_as - 1 <= 21:  #Au maximum 1 carte as qui vaut 11
         points_to_add = 11 + nb_as - 1
@@ -28,8 +28,8 @@ graine = int(input("Entrez la graine : "))
 seed(graine)
 money = int(input("Veuillez entrer la quantité d'argent en votre possession : "))
 poursuivre = 1
-card_type = [0, "as", 2, 3, 4, 5, 6, 7, 8, 9, 10, "valet", "dame", "roi"]   #Rajout d'une valeur (0) au début pour faire directement correspondre la carte à son indice
-card_value = [0, 1, 2, 3, 4, 5, 6, 7, 8 ,9, 10, 10, 10, 10]                 #Exemple : Carte 2 correspond à l'indice 2
+card_type = [0, "as", 2, 3, 4, 5, 6, 7, 8, 9, 10, "valet", "dame", "roi"]
+card_value = [0, 1, 2, 3, 4, 5, 6, 7, 8 ,9, 10, 10, 10, 10]
 
 while poursuivre == 1:      #Boucle pour rejouer
     points_player, points_bank, nb_card_player, nb_card_bank= 0, 0, 0, 0       #Reset
@@ -64,7 +64,7 @@ while poursuivre == 1:      #Boucle pour rejouer
             else:
                 points_bank += card_value[card]
             potential_points = points_bank + as_value(points_bank, card_as)
-            if card_as >= 1 and potential_points > 17:
+            if card_as >= 1 and potential_points > 17:  #Si la banque a une carte as qui lui premet d'avoir entre 17 et 21 points, elle ne va plus jouer
                 repiocher = 0
         if card_as >= 1:        #Calcul de la valeur de la ou des carte(s) as
             points_bank += as_value(points_bank, card_as)
