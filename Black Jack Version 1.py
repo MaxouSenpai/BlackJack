@@ -64,7 +64,7 @@ while poursuivre == 1:      #Boucle pour rejouer
             else:
                 points_bank += card_value[card]
             potential_points = points_bank + as_value(points_bank, card_as)
-            if card_as >= 1 and potential_points < 17 and potential_points >= 21:
+            if card_as >= 1 and potential_points > 17:
                 repiocher = 0
         if card_as >= 1:        #Calcul de la valeur de la ou des carte(s) as
             points_bank += as_value(points_bank, card_as)
