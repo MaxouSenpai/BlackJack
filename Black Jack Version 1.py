@@ -13,7 +13,7 @@ Pour jouer il suffit de suivre les instructions affichées a l'écran
 def as_value(points, nb_as):
     """
     Cette fonction calcule la valeur de la ou des cartes "As"
-    Elle prend en entrée les points obtenu(s) ainsi que le nombre de carte(s) "As" obtenu(s)
+    Elle prend en entrée les points ainsi que le nombre de cartes "As" obtenus
     Elle renvoie le nombre de points à ajouter
     """
     if points + 11 + nb_as - 1 <= 21:  #Au maximum 1 carte as qui vaut 11
@@ -28,13 +28,12 @@ graine = int(input("Entrez la graine : "))
 seed(graine)
 money = int(input("Veuillez entrer la quantité d'argent en votre possession : "))
 poursuivre = 1
-card_type = [0, "as", 2, 3, 4, 5, 6, 7, 8, 9, 10, "valet", "dame", "roi"]   #Rajout d'une valeur (0) au début pour faire correspondre la carte à son indice
+card_type = [0, "as", 2, 3, 4, 5, 6, 7, 8, 9, 10, "valet", "dame", "roi"]   #Rajout d'une valeur (0) au début pour faire directement correspondre la carte à son indice
 card_value = [0, 1, 2, 3, 4, 5, 6, 7, 8 ,9, 10, 10, 10, 10]                 #Exemple : Carte 2 correspond à l'indice 2
 
 while poursuivre == 1:      #Boucle pour rejouer
     points_player, points_bank, nb_card_player, nb_card_bank= 0, 0, 0, 0       #Reset
-    repiocher = 1              #Reset
-    card_as = 0             #Reset
+    repiocher, card_as = 1,0             #Reset
     mise = int(input("Veuillez entrer votre mise (vous avez : " + str(money) + ") : "))
     while repiocher == 1:      #Tour du joueur
         card = randint(1, 13)
@@ -75,7 +74,7 @@ while poursuivre == 1:      #Boucle pour rejouer
             money += mise
         elif points_bank == points_player:
             print("La banque a obtenu " + str(points_bank) + " points")
-            if points_bank == 21:   #Verifie si un des deux ou les deux ont obtenu un BlackJack (Un as + un carte valant 10)
+            if points_bank == 21:   #Verifie si un des deux ou les deux ont obtenu un BlackJack (Un as + une carte valant 10)
                 if nb_card_player == 2 and nb_card_bank > 2:
                     print("Vous gagnez " + str(mise))
                     money += mise
